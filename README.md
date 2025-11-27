@@ -364,8 +364,9 @@ This project is created for educational purposes as a final year project.
 
 ## 👥 Credits
 
+- **Developer**: Swathi C
 - **Project**: Predictive Analytics for Job Market Trends
-- **Year**: 2024
+- **Year**: 2025
 - **Framework**: Flask (Python)
 - **UI/UX**: TailwindCSS, Chart.js
 
