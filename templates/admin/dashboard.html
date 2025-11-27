@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Job Market Trends Analytics{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-display font-bold text-gray-800 dark:text-gray-200">Admin Dashboard</h1>
+            <a href="{{ url_for('admin.logout') }}" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                Logout
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Manage Skills -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Manage Skills Database</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Job Role</label>
+                        <input type="text" id="adminJobRole" placeholder="e.g., Data Scientist" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Skills (comma-separated)</label>
+                        <textarea id="adminSkills" rows="4" placeholder="Python, SQL, Machine Learning" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"></textarea>
+                    </div>
+                    <button id="saveSkills" class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        Save Skills
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Upload Dataset -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Upload Dataset</h2>
+                <div class="space-y-4">
+                    <input type="file" id="adminFileInput" accept=".csv" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                    <button id="uploadDataset" class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        Upload Dataset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Save Skills
+    document.getElementById('saveSkills').addEventListener('click', async () => {
+        const jobRole = document.getElementById('adminJobRole').value;
+        const skillsText = document.getElementById('adminSkills').value;
+        const skills = skillsText.split(',').map(s => s.trim()).filter(s => s);
+        
+        if (!jobRole || skills.length === 0) {
+            alert('Please provide job role and skills');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/admin/skills', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ job_role: jobRole, skills: skills })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                alert('Skills saved successfully!');
+                document.getElementById('adminJobRole').value = '';
+                document.getElementById('adminSkills').value = '';
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+    
+    // Upload Dataset
+    document.getElementById('uploadDataset').addEventListener('click', async () => {
+        const fileInput = document.getElementById('adminFileInput');
+        const file = fileInput.files[0];
+        
+        if (!file) {
+            alert('Please select a file');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+            const response = await fetch('/admin/upload-dataset', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                alert('Dataset uploaded successfully!');
+                fileInput.value = '';
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+</script>
+{% endblock %}
+

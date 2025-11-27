@@ -1,0 +1,33 @@
+{
+  "Data Scientist": {
+    "entry": ["Python", "SQL", "Statistics", "Data Analysis"],
+    "mid": ["Python", "SQL", "Statistics", "Machine Learning", "Pandas", "NumPy", "Scikit-learn"],
+    "senior": ["Python", "SQL", "Statistics", "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch", "MLOps", "Cloud Computing"]
+  },
+  "Machine Learning Engineer": {
+    "entry": ["Python", "Machine Learning", "Scikit-learn", "Git"],
+    "mid": ["Python", "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch", "MLOps", "Docker"],
+    "senior": ["Python", "Deep Learning", "TensorFlow", "PyTorch", "MLOps", "Kubernetes", "Cloud", "Distributed Systems"]
+  },
+  "Software Engineer": {
+    "entry": ["Programming", "Data Structures", "Algorithms", "Git"],
+    "mid": ["Programming", "Data Structures", "Algorithms", "Git", "System Design", "Testing"],
+    "senior": ["Programming", "Data Structures", "Algorithms", "Git", "System Design", "Architecture", "Microservices", "Cloud"]
+  },
+  "DevOps Engineer": {
+    "entry": ["Linux", "Git", "Docker", "CI/CD"],
+    "mid": ["Linux", "Docker", "Kubernetes", "AWS", "CI/CD", "Terraform"],
+    "senior": ["Linux", "Docker", "Kubernetes", "AWS", "Azure", "Terraform", "Ansible", "Monitoring"]
+  },
+  "Cloud Architect": {
+    "entry": ["Cloud Basics", "Linux", "Networking"],
+    "mid": ["AWS", "Azure", "Docker", "Kubernetes", "Terraform", "Networking"],
+    "senior": ["AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Architecture", "Security", "Cost Optimization"]
+  },
+  "Data Analyst": {
+    "entry": ["Excel", "SQL", "Data Analysis"],
+    "mid": ["SQL", "Python", "Excel", "Tableau", "Power BI", "Statistics"],
+    "senior": ["SQL", "Python", "Tableau", "Power BI", "Advanced Statistics", "Data Visualization", "Business Intelligence"]
+  }
+}
+

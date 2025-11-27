@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Job Recommendations - Job Market Trends Analytics{% endblock %}
+
+{% block body %}
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900">
+    {% include "components/sidebar.html" %}
+    
+    <div class="flex-1 ml-64">
+        {% include "components/navbar.html" %}
+        
+        <main class="p-6 mt-16">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl font-display font-bold text-gray-800 dark:text-gray-200 mb-8">Job Recommendation Engine</h1>
+                
+                <!-- Input Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Enter Your Skills</h2>
+                    
+                    <div class="mb-6">
+                        <div id="skillsInput" class="flex flex-wrap gap-2 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 min-h-[100px]">
+                            <!-- Skills will be added here -->
+                        </div>
+                        <input type="text" id="skillInput" placeholder="Type a skill and press Enter" class="mt-2 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    
+                    <button id="getRecommendations" class="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold">
+                        Get Job Recommendations
+                    </button>
+                </div>
+                
+                <!-- Results Section -->
+                <div id="resultsSection" class="hidden">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Recommended Jobs</h2>
+                    
+                    <div id="recommendationsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let userSkills = [];
+    
+    // Skill input handling
+    const skillInput = document.getElementById('skillInput');
+    const skillsInput = document.getElementById('skillsInput');
+    
+    skillInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && skillInput.value.trim()) {
+            addSkill(skillInput.value.trim());
+            skillInput.value = '';
+        }
+    });
+    
+    function addSkill(skill) {
+        if (!userSkills.includes(skill)) {
+            userSkills.push(skill);
+            renderSkills();
+        }
+    }
+    
+    function removeSkill(skill) {
+        userSkills = userSkills.filter(s => s !== skill);
+        renderSkills();
+    }
+    
+    function renderSkills() {
+        skillsInput.innerHTML = userSkills.map(skill => `
+            <span class="inline-flex items-center px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm">
+                ${skill}
+                <button onclick="removeSkill('${skill}')" class="ml-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
+                    ×
+                </button>
+            </span>
+        `).join('');
+    }
+    
+    // Get recommendations
+    document.getElementById('getRecommendations').addEventListener('click', async () => {
+        if (userSkills.length === 0) {
+            alert('Please add at least one skill');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/recommendations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ skills: userSkills })
+            });
+            
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error);
+            }
+            
+            displayRecommendations(data.recommendations);
+            
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+    
+    function displayRecommendations(recommendations) {
+        document.getElementById('resultsSection').classList.remove('hidden');
+        
+        const grid = document.getElementById('recommendationsGrid');
+        grid.innerHTML = recommendations.map(rec => `
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition transform hover:-translate-y-1">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">${rec.role}</h3>
+                    <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">${rec.match_percentage}%</div>
+                </div>
+                <div class="mb-4">
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-indigo-600 h-2 rounded-full" style="width: ${rec.match_percentage}%"></div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Required Skills:</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${rec.required_skills.map(skill => `
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs">${skill}</span>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    <p>Matching: ${rec.matching_skills_count} / ${rec.total_required} skills</p>
+                </div>
+            </div>
+        `).join('');
+    }
+</script>
+{% endblock %}
+

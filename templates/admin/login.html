@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login - Job Market Trends Analytics{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-display font-bold text-gray-800 dark:text-gray-200 mb-2">Admin Login</h1>
+            <p class="text-gray-600 dark:text-gray-400">Job Market Trends Analytics</p>
+        </div>
+        
+        {% if error %}
+        <div class="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg mb-6">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <form method="POST" action="{{ url_for('admin.login') }}">
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Username</label>
+                    <input type="text" name="username" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                    <input type="password" name="password" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                
+                <button type="submit" class="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold">
+                    Login
+                </button>
+            </div>
+        </form>
+        
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('main.index') }}" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                Back to Home
+            </a>
+        </div>
+        
+        <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <p class="text-xs text-gray-600 dark:text-gray-400 text-center">
+                Default credentials: admin / admin123
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

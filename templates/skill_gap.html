@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Skill Gap Analyzer - Job Market Trends Analytics{% endblock %}
+
+{% block body %}
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900">
+    {% include "components/sidebar.html" %}
+    
+    <div class="flex-1 ml-64">
+        {% include "components/navbar.html" %}
+        
+        <main class="p-6 mt-16">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-3xl font-display font-bold text-gray-800 dark:text-gray-200 mb-8">Skill Gap Analyzer</h1>
+                
+                <!-- Input Form -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Analyze Your Skills</h2>
+                    
+                    <div class="space-y-6">
+                        <!-- Job Role -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Job Role</label>
+                            <select id="jobRole" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Select a job role...</option>
+                                <option value="Data Scientist">Data Scientist</option>
+                                <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                                <option value="Software Engineer">Software Engineer</option>
+                                <option value="DevOps Engineer">DevOps Engineer</option>
+                                <option value="Cloud Architect">Cloud Architect</option>
+                                <option value="Data Analyst">Data Analyst</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Experience Level -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Experience Level</label>
+                            <select id="experienceLevel" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="entry">Entry Level</option>
+                                <option value="mid" selected>Mid Level</option>
+                                <option value="senior">Senior Level</option>
+                            </select>
+                        </div>
+                        
+                        <!-- User Skills -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your Skills</label>
+                            <div id="skillsInput" class="flex flex-wrap gap-2 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 min-h-[100px]">
+                                <!-- Skills will be added here -->
+                            </div>
+                            <input type="text" id="skillInput" placeholder="Type a skill and press Enter" class="mt-2 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Common skills: Python, SQL, Machine Learning, JavaScript, React, AWS, Docker, Kubernetes</p>
+                        </div>
+                        
+                        <button id="analyzeBtn" class="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold">
+                            Analyze Skill Gap
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Section -->
+                <div id="resultsSection" class="hidden">
+                    <!-- Match Score -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Analysis Results</h2>
+                        <div class="text-center mb-6">
+                            <div class="inline-block">
+                                <div class="text-5xl font-bold text-indigo-600 dark:text-indigo-400 mb-2" id="matchPercentage">0%</div>
+                                <p class="text-gray-600 dark:text-gray-400">Skill Match</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Matching Skills -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Matching Skills</h3>
+                        <div id="matchingSkills" class="flex flex-wrap gap-2">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Missing Skills -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Missing Skills</h3>
+                        <div id="missingSkills" class="flex flex-wrap gap-2">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Skills -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Recommended Skills to Learn</h3>
+                        <div id="recommendedSkills" class="flex flex-wrap gap-2">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let userSkills = [];
+    
+    // Skill input handling
+    const skillInput = document.getElementById('skillInput');
+    const skillsInput = document.getElementById('skillsInput');
+    
+    skillInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && skillInput.value.trim()) {
+            addSkill(skillInput.value.trim());
+            skillInput.value = '';
+        }
+    });
+    
+    function addSkill(skill) {
+        if (!userSkills.includes(skill)) {
+            userSkills.push(skill);
+            renderSkills();
+        }
+    }
+    
+    function removeSkill(skill) {
+        userSkills = userSkills.filter(s => s !== skill);
+        renderSkills();
+    }
+    
+    function renderSkills() {
+        skillsInput.innerHTML = userSkills.map(skill => `
+            <span class="inline-flex items-center px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm">
+                ${skill}
+                <button onclick="removeSkill('${skill}')" class="ml-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
+                    ×
+                </button>
+            </span>
+        `).join('');
+    }
+    
+    // Analyze button
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+        const jobRole = document.getElementById('jobRole').value;
+        const experienceLevel = document.getElementById('experienceLevel').value;
+        
+        if (!jobRole) {
+            alert('Please select a job role');
+            return;
+        }
+        
+        if (userSkills.length === 0) {
+            alert('Please add at least one skill');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/skill-gap', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    job_role: jobRole,
+                    experience_level: experienceLevel,
+                    skills: userSkills
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error);
+            }
+            
+            displayResults(data.result);
+            
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+    
+    function displayResults(result) {
+        document.getElementById('resultsSection').classList.remove('hidden');
+        
+        // Match percentage
+        document.getElementById('matchPercentage').textContent = result.match_percentage + '%';
+        
+        // Matching skills
+        const matchingDiv = document.getElementById('matchingSkills');
+        matchingDiv.innerHTML = result.matching_skills.map(skill => `
+            <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">${skill}</span>
+        `).join('');
+        
+        // Missing skills
+        const missingDiv = document.getElementById('missingSkills');
+        missingDiv.innerHTML = result.missing_skills.map(skill => `
+            <span class="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-full text-sm">${skill}</span>
+        `).join('');
+        
+        // Recommended skills
+        const recommendedDiv = document.getElementById('recommendedSkills');
+        recommendedDiv.innerHTML = result.recommended_skills.map(skill => `
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">${skill}</span>
+        `).join('');
+    }
+</script>
+{% endblock %}
+

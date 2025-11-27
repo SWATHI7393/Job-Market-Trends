@@ -1,0 +1,12 @@
+job_title,company,location,skills,date,salary_min,salary_max
+Data Scientist,TechCorp,Remote,"Python, SQL, Machine Learning, Statistics",2024-01-15,90000,120000
+Software Engineer,DevInc,San Francisco,"Python, JavaScript, React, Git",2024-01-16,85000,110000
+Machine Learning Engineer,AI Labs,New York,"Python, TensorFlow, PyTorch, MLOps",2024-01-17,100000,140000
+Data Analyst,Analytics Co,Chicago,"SQL, Excel, Python, Tableau",2024-01-18,70000,95000
+DevOps Engineer,CloudTech,Seattle,"Docker, Kubernetes, AWS, CI/CD",2024-01-19,95000,130000
+Data Scientist,BigData Inc,Remote,"Python, SQL, Machine Learning, Pandas",2024-01-20,92000,125000
+Software Engineer,StartupXYZ,Austin,"Python, Django, PostgreSQL, Redis",2024-01-21,80000,105000
+ML Engineer,DeepMind Co,Boston,"Python, Deep Learning, NLP, Computer Vision",2024-01-22,110000,150000
+Data Scientist,TechCorp,Remote,"Python, SQL, Statistics, Scikit-learn",2024-01-23,90000,120000
+Cloud Architect,CloudCorp,Denver,"AWS, Azure, Terraform, Kubernetes",2024-01-24,120000,160000
+

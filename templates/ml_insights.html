@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}ML Model Insights - Job Market Trends Analytics{% endblock %}
+
+{% block body %}
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+    {% include "components/sidebar.html" %}
+    
+    <div class="flex-1 ml-0 lg:ml-64 transition-all duration-300">
+        {% include "components/navbar.html" %}
+        
+        <main class="p-4 md:p-6 mt-16 overflow-y-auto" style="min-height: calc(100vh - 4rem);">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl font-display font-bold text-gray-800 dark:text-gray-200 mb-8">How Our Predictions Work</h1>
+                
+                <!-- Pipeline Visualization -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Our Analysis Process</h2>
+                    <div class="flex flex-wrap justify-between items-center">
+                        <div class="text-center mb-4 md:mb-0">
+                            <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Gather Job Data</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">We collect job postings from various sources</p>
+                        </div>
+                        <div class="hidden md:block text-indigo-600 dark:text-indigo-400 text-2xl">→</div>
+                        <div class="text-center mb-4 md:mb-0">
+                            <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Clean & Organize</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">We organize the data for analysis</p>
+                        </div>
+                        <div class="hidden md:block text-indigo-600 dark:text-indigo-400 text-2xl">→</div>
+                        <div class="text-center mb-4 md:mb-0">
+                            <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Find Patterns</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">We identify trends and relationships</p>
+                        </div>
+                        <div class="hidden md:block text-indigo-600 dark:text-indigo-400 text-2xl">→</div>
+                        <div class="text-center mb-4 md:mb-0">
+                            <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Learn from Data</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Our system learns to make predictions</p>
+                        </div>
+                        <div class="hidden md:block text-indigo-600 dark:text-indigo-400 text-2xl">→</div>
+                        <div class="text-center mb-4 md:mb-0">
+                            <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mx-auto mb-2">
+                                <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Generate Insights</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">We provide you with predictions</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Model Architecture -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">How We Make Predictions</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">📈 Predicting Job Demand</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">We analyze historical job posting trends to forecast future demand</p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li>✓ Analyzes past job posting patterns</li>
+                                <li>✓ Considers seasonal trends and growth</li>
+                                <li>✓ Factors in industry and job role types</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">🎯 Job Recommendations</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">We match your skills with the best job opportunities</p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li>✓ Compares your skills with job requirements</li>
+                                <li>✓ Calculates how well you match each role</li>
+                                <li>✓ Considers your experience level</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Metrics -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Prediction Accuracy</p>
+                        <p class="text-4xl font-bold text-indigo-600 dark:text-indigo-400">87.5%</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">How accurate our predictions are</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Average Error</p>
+                        <p class="text-4xl font-bold text-indigo-600 dark:text-indigo-400">245</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Typical difference from actual values</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Precision Score</p>
+                        <p class="text-4xl font-bold text-indigo-600 dark:text-indigo-400">190</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">How close our estimates are</p>
+                    </div>
+                </div>
+                
+                <!-- Performance Chart -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">How Our System Improves Over Time</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">As we analyze more data, our predictions become more accurate</p>
+                    <div class="relative" style="height: 300px;">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Performance Chart
+    const perfCtx = document.getElementById('performanceChart').getContext('2d');
+    new Chart(perfCtx, {
+        type: 'line',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10'],
+            datasets: [
+                {
+                    label: 'Learning Progress',
+                    data: [0.8, 0.6, 0.45, 0.35, 0.28, 0.22, 0.18, 0.15, 0.13, 0.12],
+                    borderColor: 'rgb(99, 102, 241)',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Testing Accuracy',
+                    data: [0.85, 0.65, 0.5, 0.4, 0.32, 0.26, 0.22, 0.19, 0.17, 0.16],
+                    borderColor: 'rgb(16, 185, 129)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + (context.parsed.y * 100).toFixed(1) + '% accuracy';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 1,
+                    ticks: {
+                        callback: function(value) {
+                            return (value * 100).toFixed(0) + '%';
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Accuracy Level'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time Period'
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Blog & Insights - Job Market Trends Analytics{% endblock %}
+
+{% block body %}
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900">
+    {% include "components/sidebar.html" %}
+    
+    <div class="flex-1 ml-64">
+        {% include "components/navbar.html" %}
+        
+        <main class="p-6 mt-16">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl font-display font-bold text-gray-800 dark:text-gray-200 mb-8">Blog & Insights</h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for post in posts %}
+                    <article class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1">
+                        <div class="h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">{{ post.date }} • {{ post.author }}</div>
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3">{{ post.title }}</h2>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">{{ post.excerpt }}</p>
+                            <a href="{{ url_for('main.blog_post', post_id=post.id) }}" class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
+                                Read more →
+                            </a>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Trends Explorer - Job Market Trends Analytics{% endblock %}
+
+{% block body %}
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900">
+    {% include "components/sidebar.html" %}
+    
+    <div class="flex-1 ml-64">
+        {% include "components/navbar.html" %}
+        
+        <main class="p-6 mt-16">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl font-display font-bold text-gray-800 dark:text-gray-200 mb-8">Trends Explorer</h1>
+                
+                <!-- Search Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Search Job Role</h2>
+                    <div class="flex gap-4">
+                        <input type="text" id="searchInput" placeholder="Enter job role (e.g., Data Scientist)" class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button id="searchBtn" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold">
+                            Search
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Section -->
+                <div id="resultsSection" class="hidden">
+                    <!-- Historical Demand Chart -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Historical Demand</h3>
+                        <canvas id="historicalChart" height="100"></canvas>
+                    </div>
+                    
+                    <!-- Forecast Chart -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Demand Forecast</h3>
+                        <canvas id="forecastChart" height="100"></canvas>
+                    </div>
+                    
+                    <!-- Salary Insights & Skills -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Salary Insights</h3>
+                            <div id="salaryInsights" class="space-y-3">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Required Skills</h3>
+                            <div id="skillsCloud" class="flex flex-wrap gap-2">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('searchBtn').addEventListener('click', async () => {
+        const query = document.getElementById('searchInput').value.trim();
+        
+        if (!query) {
+            alert('Please enter a job role');
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/trends/${encodeURIComponent(query)}`);
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error);
+            }
+            
+            displayTrends(data.trends, query);
+            
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+    
+    function displayTrends(trends, role) {
+        document.getElementById('resultsSection').classList.remove('hidden');
+        
+        // Historical Chart
+        const histCtx = document.getElementById('historicalChart').getContext('2d');
+        new Chart(histCtx, {
+            type: 'line',
+            data: {
+                labels: trends.dates,
+                datasets: [{
+                    label: 'Job Demand',
+                    data: trends.demand,
+                    borderColor: 'rgb(99, 102, 241)',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+        
+        // Forecast Chart
+        const forecastCtx = document.getElementById('forecastChart').getContext('2d');
+        new Chart(forecastCtx, {
+            type: 'line',
+            data: {
+                labels: [...trends.dates, ...trends.dates.slice(-12).map((_, i) => `F${i+1}`)],
+                datasets: [
+                    {
+                        label: 'Historical',
+                        data: [...trends.demand, ...Array(12).fill(null)],
+                        borderColor: 'rgb(99, 102, 241)',
+                        borderDash: [5, 5]
+                    },
+                    {
+                        label: 'Forecast',
+                        data: [...Array(trends.demand.length).fill(null), ...trends.forecast],
+                        borderColor: 'rgb(16, 185, 129)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+        
+        // Salary Insights (placeholder)
+        document.getElementById('salaryInsights').innerHTML = `
+            <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <p class="text-sm text-gray-600 dark:text-gray-400">Average Salary</p>
+                <p class="text-2xl font-bold text-gray-800 dark:text-gray-200">$95,000</p>
+            </div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <p class="text-sm text-gray-600 dark:text-gray-400">Salary Range</p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">$75,000 - $130,000</p>
+            </div>
+        `;
+        
+        // Skills Cloud (placeholder)
+        const skills = ['Python', 'SQL', 'Machine Learning', 'Statistics', 'Data Analysis', 'Pandas', 'NumPy', 'Scikit-learn'];
+        document.getElementById('skillsCloud').innerHTML = skills.map(skill => `
+            <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm">${skill}</span>
+        `).join('');
+    }
+</script>
+{% endblock %}
+

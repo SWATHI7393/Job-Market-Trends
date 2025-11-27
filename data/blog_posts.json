@@ -1,0 +1,43 @@
+[
+  {
+    "id": "1",
+    "title": "The Future of AI Jobs in 2024",
+    "excerpt": "Exploring how AI is reshaping the job market and creating new opportunities for professionals across industries.",
+    "date": "2024-01-15",
+    "author": "Analytics Team",
+    "thumbnail": "/static/images/blog-1.jpg"
+  },
+  {
+    "id": "2",
+    "title": "Top 10 In-Demand Skills for Data Scientists",
+    "excerpt": "A comprehensive guide to the skills that will make you stand out in the competitive data science job market in 2024.",
+    "date": "2024-01-10",
+    "author": "Career Insights",
+    "thumbnail": "/static/images/blog-2.jpg"
+  },
+  {
+    "id": "3",
+    "title": "Understanding Job Market Saturation",
+    "excerpt": "Learn how to identify oversaturated markets and find emerging opportunities in the tech industry.",
+    "date": "2024-01-05",
+    "author": "Market Research",
+    "thumbnail": "/static/images/blog-3.jpg"
+  },
+  {
+    "id": "4",
+    "title": "Salary Trends in Tech: What to Expect",
+    "excerpt": "An analysis of salary trends across different tech roles and how to negotiate better compensation packages.",
+    "date": "2023-12-28",
+    "author": "Salary Insights",
+    "thumbnail": "/static/images/blog-4.jpg"
+  },
+  {
+    "id": "5",
+    "title": "Remote Work Impact on Job Market",
+    "excerpt": "How remote work is changing job market dynamics and what it means for job seekers and employers.",
+    "date": "2023-12-20",
+    "author": "Work Trends",
+    "thumbnail": "/static/images/blog-5.jpg"
+  }
+]
+

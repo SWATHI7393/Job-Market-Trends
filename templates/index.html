@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Job Market Trends Analytics - Predictive Analytics Platform{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 text-white">
+    <div class="container mx-auto px-6 py-20">
+        <!-- Navigation -->
+        <nav class="flex justify-between items-center mb-16">
+            <div class="text-2xl font-display font-bold">JobTrends AI</div>
+            <div class="space-x-6">
+                <a href="{{ url_for('main.dashboard') }}" class="hover:underline">Dashboard</a>
+                <a href="{{ url_for('main.blog') }}" class="hover:underline">Blog</a>
+                <a href="{{ url_for('admin.login') }}" class="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-gray-100 transition">Admin</a>
+            </div>
+        </nav>
+        
+        <!-- Hero Content -->
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-display font-bold mb-6 animate-fade-in">
+                Predictive Analytics for Job Market Trends
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-indigo-100">
+                Forecast job demand, analyze skills, and explore future-ready career insights.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ url_for('main.dashboard') }}" class="px-8 py-4 bg-white text-indigo-600 rounded-xl font-semibold hover:bg-gray-100 transform hover:scale-105 transition shadow-lg">
+                    Explore Dashboard
+                </a>
+                <a href="{{ url_for('main.predict') }}" class="px-8 py-4 bg-indigo-700 text-white rounded-xl font-semibold hover:bg-indigo-800 transform hover:scale-105 transition shadow-lg border-2 border-white/20">
+                    Run Predictions
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-display font-bold text-center mb-12 text-gray-800 dark:text-gray-200">
+            Powerful Features for Job Market Intelligence
+        </h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-2">
+                <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">Job Demand Forecasting</h3>
+                <p class="text-gray-600 dark:text-gray-400">Predict future job market demand using advanced time-series models and ML algorithms.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-2">
+                <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">Skill Gap Analyzer</h3>
+                <p class="text-gray-600 dark:text-gray-400">Identify missing skills and get personalized recommendations to bridge the gap.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-2">
+                <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">Salary Trend Predictions</h3>
+                <p class="text-gray-600 dark:text-gray-400">Analyze and forecast salary trends across industries and job roles.</p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-2">
+                <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">Job Role Recommendations</h3>
+                <p class="text-gray-600 dark:text-gray-400">Get AI-powered job recommendations based on your skills and career goals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 py-12">
+    <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-display font-bold text-white mb-4">JobTrends AI</h3>
+                <p class="text-sm">Predictive analytics platform for job market intelligence and career insights.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-4">Project</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{{ url_for('main.dashboard') }}" class="hover:text-indigo-400">Dashboard</a></li>
+                    <li><a href="{{ url_for('main.blog') }}" class="hover:text-indigo-400">Blog</a></li>
+                    <li><a href="{{ url_for('main.ml_insights') }}" class="hover:text-indigo-400">ML Insights</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-4">Resources</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-indigo-400">Documentation</a></li>
+                    <li><a href="#" class="hover:text-indigo-400">API Reference</a></li>
+                    <li><a href="#" class="hover:text-indigo-400">GitHub</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-white mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>Email: contact@jobtrends.ai</li>
+                    <li>Final Year Project 2024</li>
+                </ul>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="hover:text-indigo-400">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="#" class="hover:text-indigo-400">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    </a>
+                    <a href="#" class="hover:text-indigo-400">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+            <p>&copy; 2024 Job Market Trends Analytics. Final Year Project.</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
